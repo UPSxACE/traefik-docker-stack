@@ -4,7 +4,7 @@ services:
     container_name: "traefik"
     labels:
       # TESTING
-      #- "log.level=DEBUG"
+      - log.level=DEBUG
       #- "api.insecure=true"
       # BASIC CONFIG
       - providers.docker=true
@@ -15,17 +15,17 @@ services:
       - entryPoints.web.http.redirections.entryPoint.scheme=https
       - entryPoints.web.http.redirections.entryPoint.permanent=true
       # SSL
-      - certificatesresolvers.staging.acme.httpchallenge=true
-      - certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
-      - certificatesresolvers.staging.acme.email=${ACME_EMAIL}
-      - certificatesresolvers.staging.acme.storage=/etc/traefik/certs/acme.json
-      - certificatesresolvers.production.acme.httpchallenge=true
-      - certificatesresolvers.production.acme.httpchallenge.entrypoint=web
-      - certificatesresolvers.production.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
-      - certificatesresolvers.production.acme.email=${ACME_EMAIL}
-      - certificatesresolvers.production.acme.storage=/etc/traefik/certs/acme.json
-      - global.sendanonymoususage=false
-      - "io.portainer.accesscontrol.public"
+      #- certificatesresolvers.staging.acme.httpchallenge=true
+      #- certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
+      #- certificatesresolvers.staging.acme.email=${ACME_EMAIL}
+      #- certificatesresolvers.staging.acme.storage=/etc/traefik/certs/acme.json
+      #- certificatesresolvers.production.acme.httpchallenge=true
+      #- certificatesresolvers.production.acme.httpchallenge.entrypoint=web
+      #- certificatesresolvers.production.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      #- certificatesresolvers.production.acme.email=${ACME_EMAIL}
+      #- certificatesresolvers.production.acme.storage=/etc/traefik/certs/acme.json
+      #- global.sendanonymoususage=false
+      #- "io.portainer.accesscontrol.public"
     ports:
       - "80:80"
       - "443:443"
