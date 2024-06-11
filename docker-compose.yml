@@ -1,0 +1,39 @@
+version: "3.3"
+
+services:
+  traefik:
+    image: "traefik:v3.0"
+    container_name: "traefik"
+    labels:
+      # TESTING
+      #- "log.level=DEBUG"
+      #- "api.insecure=true"
+      # BASIC CONFIG
+      - providers.docker=true
+      - providers.docker.exposedbydefault=false
+      - entrypoints.web.address=:80
+      - entrypoints.websecure.address=:443
+      # SSL
+      - certificatesresolvers.staging.acme.httpchallenge=true
+      - certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
+      - certificatesresolvers.staging.acme.email=${ACME_EMAIL}
+      - certificatesresolvers.staging.acme.storage=/etc/traefik/certs/acme.json
+      - certificatesresolvers.production.acme.httpchallenge=true
+      - certificatesresolvers.production.acme.httpchallenge.entrypoint=web
+      - certificatesresolvers.production.acme.caserver=https://acme-v02.api.letsencrypt.org/directory
+      - certificatesresolvers.production.acme.email=${ACME_EMAIL}
+      - certificatesresolvers.production.acme.storage=/etc/traefik/certs/acme.json
+      - global.sendanonymoususage=false
+      - "io.portainer.accesscontrol.public"
+    ports:
+      - "80:80"
+      - "443:443"
+      # - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./certs/:/etc/traefik/certs/
+      - ./logs/:/logs/
+    networks:
+      - traefik_network
+networks:
+  traefik_network:
