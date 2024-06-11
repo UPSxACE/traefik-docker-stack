@@ -9,8 +9,11 @@ services:
       # BASIC CONFIG
       - providers.docker=true
       - providers.docker.exposedbydefault=false
-      - entrypoints.web.address=:80
-      - entrypoints.websecure.address=:443
+      - entryPoints.web.address=:80
+      - entryPoints.websecure.address=:443
+      - entryPoints.web.http.redirections.entryPoint.to=websecure
+      - entryPoints.web.http.redirections.entryPoint.scheme=https
+      - entryPoints.web.http.redirections.entryPoint.permanent=true
       # SSL
       - certificatesresolvers.staging.acme.httpchallenge=true
       - certificatesresolvers.staging.acme.httpchallenge.entrypoint=web
