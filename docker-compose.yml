@@ -38,5 +38,6 @@ services:
       - ./logs/:/logs/
     networks:
       - traefik_network
+    restart: always
 networks:
   traefik_network:
